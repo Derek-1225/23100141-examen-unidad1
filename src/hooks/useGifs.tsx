@@ -4,6 +4,7 @@ import { type Giphy } from "../types/GiphyType"
 export const useGifs = (query:string) => {
     const[gifs,setGifs] = useState<Giphy[]>([])
     const [hasError,setHasError] = useState(false)
+    const[count,setCount] = useState(0)
     useEffect(()=>{
             const getGifs = async ()=>{
                 setHasError(false)
@@ -18,8 +19,14 @@ export const useGifs = (query:string) => {
             void getGifs()
     },[query])
 
+    useEffect(() => {
+        const suma = gifs.reduce((acc) => acc + 1, 0);
+        setCount(suma);
+    }, [gifs]);
+
     return{
         gifs,
-        hasError
+        hasError,
+        count
     }
 }

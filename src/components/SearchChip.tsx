@@ -1,16 +1,20 @@
 import '../styles/SearchChip.css'
 
 interface SearchChipProps {
-  valor: string
+    valor: string
+    onClick?: (valor: string) => void
 }
 
-export function SearchChip({valor}:SearchChipProps) {
+export function SearchChip({valor,onClick}:SearchChipProps) {
   return (
     <>
-        <button className="search-chip search-chip--active" type="button" aria-current="true">
+        <button
+          className="search-chip search-chip--active"
+          type="button"
+          onClick={() => onClick?.(valor)}
+        >
           {valor}
         </button>
-      
     </>
   )
 }

@@ -1,20 +1,21 @@
 import '../styles/SearchHistory.css'
 import { SearchChip } from './SearchChip.tsx'
-import { useSearchBar } from '../hooks/useSearchBar.tsx'
+import { useGifExplorer } from '../hooks/useGifExplorer.tsx'
 
-export function SearchHistory() {
-  const {tags} = useSearchBar()
-  console.log(tags)
+interface SearchHistoryProps {
+  queries: string[]
+  onSelect: (query: string) => void
+}
+
+export function SearchHistory({ queries, onSelect }: SearchHistoryProps) {
+  const {tags} = useGifExplorer()
   return (
     <section className="search-history" aria-label="Búsquedas realizadas">
       <h2 className="search-history__title">Búsquedas</h2>
       <ul className="search-history__list">
-        {tags.map(tag=>(
-            <li>
-              <SearchChip valor={tag}/>
-            </li>
-          ))}
-        
+        {tags.map((tag, index) => (
+          <SearchChip key={index} valor={tag} onClick={onSelect} />
+        ))}
       </ul>
     </section>
   )

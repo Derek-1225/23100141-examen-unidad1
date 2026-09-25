@@ -1,9 +1,10 @@
 import '../styles/SearchBar.css'
 import { useSearchBar } from '../hooks/useSearchBar'
+import { useGifExplorer } from '../hooks/useGifExplorer'
 
 export function SearchBar({ onSearch }: { onSearch: (query: string) => void }) {
   const {searchValue,setSearchValue} = useSearchBar()
-
+  const {handleAddTag} = useGifExplorer()
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
     if (searchValue.trim() !== "") {
