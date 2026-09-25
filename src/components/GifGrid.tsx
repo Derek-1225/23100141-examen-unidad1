@@ -2,15 +2,20 @@ import '../styles/GifGrid.css'
 import { GifCard } from './GifCard.tsx'
 import { useGifs } from '../hooks/useGifs.tsx'
 
-export function GifGrid() {
-  const {gifs} = useGifs()
+interface gifExplorerProps{
+  query:string
+}
+
+export function GifGrid({query}:gifExplorerProps) {
+  const {gifs} = useGifs(query)
+  console.log(gifs)
   return (
     <ul className="gif-grid">
-      {/* {gifs.map(gif => (
-            <li>
-                <GifCard Gif={gif}></GifCard>
-            </li>
-      ))} */}
+      {gifs.map(gif => (
+          <li>
+              <GifCard gif={gif}/>
+          </li>
+      ))}
     </ul>
   )
 }

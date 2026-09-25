@@ -1,22 +1,22 @@
 import { useState,useEffect } from "react"
 import { getGifsAsync } from "../services/GiphyService"
-import { type Datum } from "../types/GiphyType"
-export const useGifs = () => {
-    const[gifs,setGifs] = useState<Datum[]>([])
+import { type Giphy } from "../types/GiphyType"
+export const useGifs = (query:string) => {
+    const[gifs,setGifs] = useState<Giphy[]>([])
     const [hasError,setHasError] = useState(false)
     useEffect(()=>{
             const getGifs = async ()=>{
                 setHasError(false)
                 try {
-                    const gifsResponse = await getGifsAsync('cats')
+                    const gifsResponse = await getGifsAsync(query)
                     setGifs(gifsResponse)
+                    console.log(gifsResponse)
                 } catch (error) {
                     setHasError(true)
-                    console.error(error)
                 } 
             }
             void getGifs()
-    },[])
+    },[query])
 
     return{
         gifs,

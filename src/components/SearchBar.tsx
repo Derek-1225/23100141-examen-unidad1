@@ -1,14 +1,21 @@
 import '../styles/SearchBar.css'
 import { useSearchBar } from '../hooks/useSearchBar'
 
-export function SearchBar() {
-  const {searchValue,setSearchValue,handleAddTag} = useSearchBar()
+export function SearchBar({ onSearch }: { onSearch: (query: string) => void }) {
+  const {searchValue,setSearchValue} = useSearchBar()
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+    if (searchValue.trim() !== "") {
+      onSearch(searchValue)  
+      setSearchValue("")
+    }
+  }
+
   return (
     <form
       className="search-bar"
-      onSubmit={(event) => {
-        event.preventDefault()
-      }}
+      onSubmit={handleSubmit}
     >
       <label className="search-bar__label" htmlFor="gif-search">
         Buscar GIFs
@@ -24,7 +31,7 @@ export function SearchBar() {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
-        <button className="search-bar__button" type="submit" onClick={handleAddTag}>
+        <button className="search-bar__button" type="submit">
           Buscar
         </button>
       </div>

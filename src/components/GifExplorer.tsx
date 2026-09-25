@@ -1,9 +1,14 @@
+import { useSearchBar } from '../hooks/useSearchBar.tsx'
+import { useGifExplorer } from '../hooks/useGifExplorer.tsx'
 import '../styles/GifExplorer.css'
 import { GifGrid } from './GifGrid.tsx'
 import { SearchBar } from './SearchBar.tsx'
 import { SearchHistory } from './SearchHistory.tsx'
 
 export function GifExplorer() {
+  const {searchValue} = useSearchBar()
+  const {query,setQuery} = useGifExplorer()
+  console.log(searchValue)
   return (
     <main className="gif-explorer">
       <header className="gif-explorer__header">
@@ -14,17 +19,16 @@ export function GifExplorer() {
         </p>
       </header>
 
-      <SearchBar />
+      <SearchBar onSearch={setQuery} />
       <SearchHistory />
-
       <section className="gif-explorer__results" aria-label="Resultados">
         <div className="gif-explorer__results-header">
-          <h2>Resultados para «cats»</h2>
+          <h2>Resultados para {searchValue}</h2>
           <p> GIFs</p>
         </div>
-        
+                
         <div>
-          {/* <GifGrid/> */}
+          <GifGrid query={query}/>
         </div>
       </section>
     </main>
